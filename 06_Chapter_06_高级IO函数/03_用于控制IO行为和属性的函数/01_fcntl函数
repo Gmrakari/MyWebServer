@@ -1,0 +1,42 @@
+
+//fcntl --> file control
+//提供了对文件描述符的各种控制器操作
+
+//另外一个常见的控制文件描述符属性和行为的系统调用是ioctl,而且icoctl比fcntl能够执行更多的控制
+
+#include <fcntl.h>
+int fcntl( int fd, int cmd, ... );
+
+//fd是被操作的文件描述符
+//cmd参数指定执行何种类型的操作
+
+				/F_DUPFD 创建一个新的文件描述符，其值大于或等于arg 
+复制文件描述符 
+				\F_DUPFD_CLOEXEC 与F_DUPFD相似，不过在创建文件描述符的同时，设置其close-on-exec标志
+
+							/F_GETFD 获取fd的标志，比如close-on-exec标志
+获取和设置文件描述符的标志
+							\F_SETFD 设置fd的标志
+
+								/F_GETFL 获取fd的状态标志，这些标志包括可由open系统调用设置的标志(O_APPEND、O_CREAT等)和访问模式
+获取和设置文件描述符的状态标志
+								\F_SETFL 设置fd的状态标志，但部分标志是不能被修改的(比如访问模式标志)
+
+		 ——F_GETOWN 获得SIGIO和SIGURG信号的宿主进程的PID或进程组的组ID
+		 ——F_SETOWN 设定SIGIO和SIGURG信号的宿主进程的PID或者进程组的组ID
+管道信号
+		 ——F_GETSIG 获取当应用程序被通知fd可读或可写时，是哪个信号通知该事件
+		 ——F_SETSIG 设置当fd可读或可写时，系统应该处罚哪个信号来通知应用程序
+
+			 /F_SETPIPE_SZ 设置由fd指定的管道的容量。/proc/sys/fs/pipe-size-max内核参数指定了fcntl能设置的管道容量的上限
+操作管道容量
+			 \F_GETPIPE_SZ 获取由fd指定的管道的容量
+
+//将文件描述符设置为非阻塞的
+int setnonblocking( int fd )
+{
+	int old_option = fcntl(fd, F_GETFL);		//获取文件描述符旧的状态标志
+	int new_option = old_option | O_NONBLOCK;	//设置非阻塞标志
+	fcntl( fd,F_SETFL,new_option );				
+	return old_option;							//返回文件描述符旧的状态标志，一边日后恢复该状态标志
+}
