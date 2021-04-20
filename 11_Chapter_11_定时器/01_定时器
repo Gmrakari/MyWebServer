@@ -1,0 +1,8 @@
+
+//两种高效的管理定时器的容器：时间轮和时间堆
+
+
+//linux提供了三中定时方法
+socket选项SO_RCVTIMEO和SO_SNDTIMEO
+SIGALRM信号
+I/O复用系统调用的超时参数
