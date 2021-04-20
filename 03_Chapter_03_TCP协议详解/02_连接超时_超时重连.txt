@@ -1,0 +1,39 @@
+客户端输入:
+sudo iptables -F
+sudo iptables -I INPUT -p tcp --syn -i ens33 -j DROP
+
+
+服务端输入:
+udo tcpdump -n i ens33 port 23
+
+gmrakari@Rakari-Ubuntu:~/CLionProjects/Linux高性能服务器编程/Chapter_03$ sudo tcpdump -n -i ens33 port 23
+
+输出结果:
+
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
+1、10:59:41.640917 IP 192.168.116.136.48886 > 192.168.116.135.23: Flags [S], seq 3589454793, win 64240, options [mss 1460,sackOK,TS val 444382913 ecr 0,nop,wscale 7], length 0
+2、10:59:42.648317 IP 192.168.116.136.48886 > 192.168.116.135.23: Flags [S], seq 3589454793, win 64240, options [mss 1460,sackOK,TS val 444383923 ecr 0,nop,wscale 7], length 0
+3、10:59:44.664124 IP 192.168.116.136.48886 > 192.168.116.135.23: Flags [S], seq 3589454793, win 64240, options [mss 1460,sackOK,TS val 444385939 ecr 0,nop,wscale 7], length 0
+4、10:59:48.920178 IP 192.168.116.136.48886 > 192.168.116.135.23: Flags [S], seq 3589454793, win 64240, options [mss 1460,sackOK,TS val 444390195 ecr 0,nop,wscale 7], length 0
+5、10:59:57.111617 IP 192.168.116.136.48886 > 192.168.116.135.23: Flags [S], seq 3589454793, win 64240, options [mss 1460,sackOK,TS val 444398387 ecr 0,nop,wscale 7], length 0
+6、11:00:13.239709 IP 192.168.116.136.48886 > 192.168.116.135.23: Flags [S], seq 3589454793, win 64240, options [mss 1460,sackOK,TS val 444414515 ecr 0,nop,wscale 7], length 0
+7、11:00:46.263618 IP 192.168.116.136.48886 > 192.168.116.135.23: Flags [S], seq 3589454793, win 64240, options [mss 1460,sackOK,TS val 444447539 ecr 0,nop,wscale 7], length 0
+
+gmrakari@Rakari-Ubuntu:~/Desktop$ date;telnet 192.168.116.135;date
+2021年 01月 26日 星期二 10:59:41 CST
+Trying 192.168.116.135...
+telnet: Unable to connect to remote host: Connection timed out
+2021年 01月 26日 星期二 11:01:51 CST
+
+分析：
+一共用了70s
+
+1 2 4 9 16 33 
+
+70 - 1 - 2 - 4 - 9 - 16 - 33  = 5 
+
+
+
+
+

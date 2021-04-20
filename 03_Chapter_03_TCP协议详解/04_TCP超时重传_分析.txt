@@ -1,0 +1,53 @@
+服务端：
+
+gmrakari@Rakari-Ubuntu:~/MYFTP$ iperf -s
+------------------------------------------------------------
+Server listening on TCP port 5001
+TCP window size:  128 KByte (default)
+------------------------------------------------------------
+[  4] local 192.168.116.136 port 5001 connected with 192.168.116.135 port 44136
+^CWaiting for server threads to complete. Interrupt again to force quit.
+[ ID] Interval       Transfer     Bandwidth
+[  4]  0.0-224.3 sec  24.0 Bytes  0.86 bits/sec
+
+
+gmrakari@Rakari-Ubuntu:~/CLionProjects/Linux高性能服务器编程/Chapter_03$ sudo tcpdump -n -i ens33 port 5001
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
+1、19:32:31.758330 IP 192.168.116.135.44136 > 192.168.116.136.5001: Flags [S], seq 1900608124, win 29200, options [mss 1460,sackOK,TS val 14227876 ecr 0,nop,wscale 7], length 0
+2、19:32:31.758426 IP 192.168.116.136.5001 > 192.168.116.135.44136: Flags [S.], seq 525286966, ack 1900608125, win 65160, options [mss 1460,sackOK,TS val 475153034 ecr 14227876,nop,wscale 7], length 0
+3、19:32:31.759152 IP 192.168.116.135.44136 > 192.168.116.136.5001: Flags [.], ack 1, win 229, options [nop,nop,TS val 14227876 ecr 475153034], length 0
+
+TCP报文段1~3 三次握手建立连接的过程
+
+
+4、19:32:35.891659 IP 192.168.116.135.44136 > 192.168.116.136.5001: Flags [P.], seq 1:7, ack 1, win 229, options [nop,nop,TS val 14228909 ecr 475153034], length 6
+5、19:32:35.891754 IP 192.168.116.136.5001 > 192.168.116.135.44136: Flags [.], ack 7, win 510, options [nop,nop,TS val 475157167 ecr 14228909], length 0
+
+TCP报文段4-5 客户端发送数据"1234"(应用程序数据长度为6，包括回车、换行两个字符)及服务器确认的过程
+
+
+6、19:32:38.178251 IP 192.168.116.135.44136 > 192.168.116.136.5001: Flags [P.], seq 7:11, ack 1, win 229, options [nop,nop,TS val 14229481 ecr 475157167], length 4
+7、19:32:38.178352 IP 192.168.116.136.5001 > 192.168.116.135.44136: Flags [.], ack 11, win 510, options [nop,nop,TS val 475159454 ecr 14229481], length 0
+
+
+断网重传过程：
+19:33:16.570623 IP 192.168.116.135.44136 > 192.168.116.136.5001: Flags [P.], seq 11:13, ack 1, win 229, options [nop,nop,TS val 14239080 ecr 475159454], length 2
+19:33:16.774364 IP 192.168.116.135.44136 > 192.168.116.136.5001: Flags [P.], seq 11:13, ack 1, win 229, options [nop,nop,TS val 14239131 ecr 475159454], length 2
+19:33:16.979343 IP 192.168.116.135.44136 > 192.168.116.136.5001: Flags [P.], seq 11:13, ack 1, win 229, options [nop,nop,TS val 14239182 ecr 475159454], length 2
+19:33:17.386582 IP 192.168.116.135.44136 > 192.168.116.136.5001: Flags [P.], seq 11:13, ack 1, win 229, options [nop,nop,TS val 14239284 ecr 475159454], length 2
+19:33:18.202112 IP 192.168.116.135.44136 > 192.168.116.136.5001: Flags [P.], seq 11:13, ack 1, win 229, options [nop,nop,TS val 14239488 ecr 475159454], length 2
+19:33:19.839206 IP 192.168.116.135.44136 > 192.168.116.136.5001: Flags [P.], seq 11:13, ack 1, win 229, options [nop,nop,TS val 14239897 ecr 475159454], length 2
+19:33:23.113761 IP 192.168.116.135.44136 > 192.168.116.136.5001: Flags [P.], seq 11:13, ack 1, win 229, options [nop,nop,TS val 14240716 ecr 475159454], length 2
+
+TCP报文段67* 是客户端第一次发送数据"12"的过程。
+因为服务器的网线被断开，所以客户端无法收到TCP报文段67*的确认报文段。
+此后，客户端对TCP报文段执行了后面重传
+
+客户端：
+telnet [server@ip] [port]
+1234
+12
+
+
+

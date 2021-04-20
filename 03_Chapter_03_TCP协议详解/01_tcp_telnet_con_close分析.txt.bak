@@ -1,0 +1,19 @@
+sudo tcpdump -i ens33 -nt '(src 192.168.116.136 and dst 192.168.116.135) or (src 192.168.116.136 and dst 192.168.116.135)'
+
+IP 192.168.116.136.23 > 192.168.116.135.42230: Flags [S.], seq 1957185567, ack 925685765, win 65160, options [mss 1460,sackOK,TS val 441167752 ecr 6081916,nop,wscale 7], length 0
+IP 192.168.116.136.23 > 192.168.116.135.42230: Flags [.], ack 28, win 509, options [nop,nop,TS val 441167752 ecr 6081916], length 0
+IP 192.168.116.136.23 > 192.168.116.135.42230: Flags [P.], seq 1:13, ack 28, win 509, options [nop,nop,TS val 441167762 ecr 6081916], length 12 [telnet DO TERMINAL TYPE, DO TSPEED, DO XDISPLOC, DO NEW-ENVIRON [|telnet]
+IP 192.168.116.136.23 > 192.168.116.135.42230: Flags [P.], seq 13:52, ack 28, win 509, options [nop,nop,TS val 441167762 ecr 6081918], length 39 [telnet WILL SUPPRESS GO AHEAD, DO NAWS, DO LFLOW, DONT LINEMODE, WILL STATUS, SB TSPEED SEND SE, SB XDISPLOC SEND SE, SB NEW-ENVIRON SEND SE, SB TERMINAL TYPE SEND SE [|telnet]
+IP 192.168.116.136.23 > 192.168.116.135.42230: Flags [.], ack 114, win 509, options [nop,nop,TS val 441167763 ecr 6081919], length 0
+IP 192.168.116.136.23 > 192.168.116.135.42230: Flags [P.], seq 52:55, ack 114, win 509, options [nop,nop,TS val 441167763 ecr 6081919], length 3 [telnet DO ECHO [|telnet]
+IP 192.168.116.136.23 > 192.168.116.135.42230: Flags [.], ack 117, win 509, options [nop,nop,TS val 441167763 ecr 6081919], length 0
+IP 192.168.116.136.23 > 192.168.116.135.42230: Flags [P.], seq 55:58, ack 117, win 509, options [nop,nop,TS val 441167765 ecr 6081919], length 3 [telnet WILL ECHO [|telnet]
+IP 192.168.116.136.23 > 192.168.116.135.42230: Flags [P.], seq 58:72, ack 120, win 509, options [nop,nop,TS val 441167765 ecr 6081919], length 14
+IP 192.168.116.136.23 > 192.168.116.135.42230: Flags [P.], seq 72:93, ack 120, win 509, options [nop,nop,TS val 441167808 ecr 6081930], length 21
+IP 192.168.116.136.23 > 192.168.116.135.42230: Flags [F.], seq 93, ack 121, win 509, options [nop,nop,TS val 441171801 ecr 6082928], length 0
+
+
+
+
+
+

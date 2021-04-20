@@ -1,0 +1,18 @@
+
+拥塞控制
+
+拥塞控制：TCP为了提高网络利用率，降低丢包率，并保证网络资源对每条数据流的公平性。
+
+慢启动(slow start)、拥塞避免(congestion avoidance)、快速重传(fast retransmit)、快速恢复(fast recovery)
+
+拥塞控制的最终受控变量是发送端向网络一次连续写入(收到其中第一个数据的确认之前)的数据量，我们称为SWND(Send Window,发送窗口)。
+
+发送端最终以TCP报文段来发送数据,所以SWND限定了发送端能连续发送的TCP报文段数量。
+
+这些TCP报文段的最大长度(仅指数据部分)称为SMSS(Sender Maximum Segment Size,发送者最大段大小)，其值一般等于MSS
+
+发送端需要合理地选择SWND的大小。如果SWND太小，会引起明显的网络延迟
+
+如果SWND太大，则容易导致网络拥塞。
+
+
