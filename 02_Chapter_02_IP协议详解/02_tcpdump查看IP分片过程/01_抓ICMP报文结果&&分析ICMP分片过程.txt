@@ -1,0 +1,24 @@
+IP (tos 0x0, ttl 64, id 55868, offset 0, flags [+], proto ICMP (1), length 1500)
+    192.168.116.136 > 192.168.116.1: ICMP echo request, id 2, seq 1, length 1480
+
+IP (tos 0x0, ttl 64, id 55868, offset 1480, flags [none], proto ICMP (1), length 21)
+    192.168.116.136 > 192.168.116.1: ip-proto-1
+
+    
+这两个IP分片的标识值都是55868,说明它们是同个IP数据报的分片。
+
+第一个分片的片偏移值为0,而第二个则是1480
+
+很显然，第二个分片的片偏移值实际上也是第一个分片的ICMP报文的长度。
+
+第一个分片设置了MF标志以表示还有后续分片，所以tcpdump输出"flag[+]"
+而第二个分片没有设置任何标志，所以tcpdump输出"flag[none]"
+
+这两个分片的长度分别为1500字节和21字节
+
+IP层传递给数据链路层的数据可能是一个完整的IP数据报，也可能是一个IP分片
+它们统称为IP分组(packet)。
+
+
+
+

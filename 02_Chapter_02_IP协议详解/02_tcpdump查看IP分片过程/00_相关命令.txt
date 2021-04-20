@@ -1,0 +1,3 @@
+
+sudo tcpdump -ntv -i ens33 icmp
+ping rakari -s 1473
