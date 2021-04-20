@@ -1,0 +1,45 @@
+
+当格式化的数据（比如32bit整型数和16bit短整型数）在两台使用不同字节序的主机之间直接传递时，接收端必然错误地解释之。
+
+解决方案：
+	发送端总是把要发送的数据转化成大端字节序数据后再发送，而接收端知道对方传送过来的数据总是采用大端字节序，所以接收端可以根据
+自身采用的字节序是否对接收到的数据进行转换（小端机转换，大端机不转换）。
+
+大端字节序也称为网络字节序，它给所有接收数据的主机提供了一个正确解释收到的格式化数据的保证
+
+#include <netinet/in.h>
+
+unsigned long int htonl(unsigned long int hostlong);主机序转换到网络序
+unsigned short int htons(unsigned short int hostshort);
+unsigned long int ntohl(unsigned long int netlong);网络序转换到主机序
+unsigned short int ntohs(unsigned short int netshort);
+
+htonl:host to network long" 将长整型（32bit）的主机字节序数据转化为网络字节序数据
+
+长整型函数通常用来转换IP地址，短整型函数用来转换端口号
+
+不同的CPU有不同的字节序类型，这些字节序是指整数在内存中保存的顺序，这叫做主机序。
+
+Little endian:将低序字节存储在起始地址
+Big endian:将高序字节存储在起始地址
+
+例子：在内存中双字0x01020304(DWORD)的存储方式
+内存地址：4000 4001 4002 4003
+LE		：04   03	02	 01
+BE		: 01   02   03   04
+
+例子：如果我们将0x1234abcd写入到以0x0000开始的内存中，则结果为
+		Big-endian		Little-endian
+0x0000	0x12			0xcd
+0x0001	0x34			0xab
+0x0002	0xab			0x34
+0x0003  0xcd			0x12
+
+
+
+
+
+
+
+
+

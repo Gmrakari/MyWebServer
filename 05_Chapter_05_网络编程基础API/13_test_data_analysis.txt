@@ -1,0 +1,78 @@
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
+IP 192.168.116.135.56314 > 192.168.116.136.54321: Flags [S], seq 1270207733, win 29200, options [mss 1460,sackOK,TS val 32499855 ecr 0,nop,wscale 7], length 0
+	0x0000:  4500 003c 3c7a 4000 4006 93e1 c0a8 7487
+	0x0010:  c0a8 7488 dbfa d431 4bb5 d4f5 0000 0000
+	0x0020:  a002 7210 b038 0000 0204 05b4 0402 080a
+	0x0030:  01ef e88f 0000 0000 0103 0307
+IP 192.168.116.136.54321 > 192.168.116.135.56314: Flags [S.], seq 3241065102, ack 1270207734, win 65160, options [mss 1460,sackOK,TS val 3721038252 ecr 32499855,nop,wscale 7], length 0
+	0x0000:  4500 003c 0000 4000 4006 d05b c0a8 7488
+	0x0010:  c0a8 7487 d431 dbfa c12e ba8e 4bb5 d4f6
+	0x0020:  a012 fe88 6a8f 0000 0204 05b4 0402 080a
+	0x0030:  ddca 89ac 01ef e88f 0103 0307
+IP 192.168.116.135.56314 > 192.168.116.136.54321: Flags [.], ack 1, win 229, options [nop,nop,TS val 32499856 ecr 3721038252], length 0
+	0x0000:  4500 0034 3c7b 4000 4006 93e8 c0a8 7487
+	0x0010:  c0a8 7488 dbfa d431 4bb5 d4f6 c12e ba8f
+	0x0020:  8010 00e5 6ce9 0000 0101 080a 01ef e890
+	0x0030:  ddca 89ac
+IP 192.168.116.135.56314 > 192.168.116.136.54321: Flags [P.], seq 1:4, ack 1, win 229, options [nop,nop,TS val 32499856 ecr 3721038252], length 3
+	0x0000:  4500 0037 3c7c 4000 4006 93e4 c0a8 7487
+	0x0010:  c0a8 7488 dbfa d431 4bb5 d4f6 c12e ba8f
+	0x0020:  8018 00e5 08ac 0000 0101 080a 01ef e890
+	0x0030:  ddca 89ac 3132 33
+IP 192.168.116.136.54321 > 192.168.116.135.56314: Flags [.], ack 4, win 510, options [nop,nop,TS val 3721038253 ecr 32499856], length 0
+	0x0000:  4500 0034 58c5 4000 4006 779e c0a8 7488
+	0x0010:  c0a8 7487 d431 dbfa c12e ba8f 4bb5 d4f9
+	0x0020:  8010 01fe 6a87 0000 0101 080a ddca 89ad
+	0x0030:  01ef e890
+IP 192.168.116.135.56314 > 192.168.116.136.54321: Flags [P.U], seq 4:7, ack 1, win 229, urg 3, options [nop,nop,TS val 32499856 ecr 3721038252], length 3
+	0x0000:  4500 0037 3c7d 4000 4006 93e3 c0a8 7487
+	0x0010:  c0a8 7488 dbfa d431 4bb5 d4f9 c12e ba8f
+	0x0020:  8038 00e5 a855 0003 0101 080a 01ef e890
+	0x0030:  ddca 89ac 6162 63
+IP 192.168.116.136.54321 > 192.168.116.135.56314: Flags [.], ack 7, win 510, options [nop,nop,TS val 3721038253 ecr 32499856], length 0
+	0x0000:  4500 0034 58c6 4000 4006 779d c0a8 7488
+	0x0010:  c0a8 7487 d431 dbfa c12e ba8f 4bb5 d4fc
+	0x0020:  8010 01fe 6a87 0000 0101 080a ddca 89ad
+	0x0030:  01ef e890
+IP 192.168.116.135.56314 > 192.168.116.136.54321: Flags [P.], seq 7:10, ack 1, win 229, options [nop,nop,TS val 32499856 ecr 3721038252], length 3
+	0x0000:  4500 0037 3c7e 4000 4006 93e2 c0a8 7487
+	0x0010:  c0a8 7488 dbfa d431 4bb5 d4fc c12e ba8f
+	0x0020:  8018 00e5 08a6 0000 0101 080a 01ef e890
+	0x0030:  ddca 89ac 3132 33
+IP 192.168.116.136.54321 > 192.168.116.135.56314: Flags [R.], seq 1, ack 7, win 510, options [nop,nop,TS val 3721038253 ecr 32499856], length 0
+	0x0000:  4500 0034 58c7 4000 4006 779c c0a8 7488
+	0x0010:  c0a8 7487 d431 dbfa c12e ba8f 4bb5 d4fc
+	0x0020:  8014 01fe 6a87 0000 0101 080a ddca 89ad
+	0x0030:  01ef e890
+IP 192.168.116.135.56314 > 192.168.116.136.54321: Flags [F.], seq 10, ack 1, win 229, options [nop,nop,TS val 32499856 ecr 3721038252], length 0
+	0x0000:  4500 0034 3c7f 4000 4006 93e4 c0a8 7487
+	0x0010:  c0a8 7488 dbfa d431 4bb5 d4ff c12e ba8f
+	0x0020:  8011 00e5 6cdf 0000 0101 080a 01ef e890
+	0x0030:  ddca 89ac
+IP 192.168.116.136.54321 > 192.168.116.135.56314: Flags [R], seq 3241065103, win 0, length 0
+	0x0000:  4500 0028 0000 4000 4006 d06f c0a8 7488
+	0x0010:  c0a8 7487 d431 dbfa c12e ba8f 0000 0000
+	0x0020:  5004 0000 1995 0000
+IP 192.168.116.136.54321 > 192.168.116.135.56314: Flags [R], seq 3241065103, win 0, length 0
+	0x0000:  4500 0028 0000 4000 4006 d06f c0a8 7488
+	0x0010:  c0a8 7487 d431 dbfa c12e ba8f 0000 0000
+	0x0020:  5004 0000 1995 0000
+^C
+12 packets captured
+12 packets received by filter
+0 packets dropped by kernel
+
+------------------------------------------------------------------------------------
+./client_send 192.168.116.136 54321
+
+-----------------------------------------------------------------------------------
+
+./13_02_接受带外数据 192.168.116.136 54321
+
+输出：got 3 bytes of normal data '123'
+
+------------------------------------------------------------------------------------
+
+
+

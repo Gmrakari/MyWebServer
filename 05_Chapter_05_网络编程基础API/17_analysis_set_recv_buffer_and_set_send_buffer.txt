@@ -1,0 +1,37 @@
+gmrakari@Rakari-Ubuntu:~/CLionProjects/Linux高性能服务器编程/Chapter_05$ sudo tcpdump -nt -i ens33 port 12345
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
+
+
+IP 192.168.116.135.37580 > 192.168.116.136.12345: Flags [S], seq 2259206782, win 29200, options [mss 1460,sackOK,TS val 39536070 ecr 0,nop,wscale 7], length 0
+IP 192.168.116.136.12345 > 192.168.116.135.37580: Flags [S.], seq 3211425935, ack 2259206783, win 65160, options [mss 1460,sackOK,TS val 3774937824 ecr 39536070,nop,wscale 7], length 0
+
+IP 192.168.116.135.37580 > 192.168.116.136.12345: Flags [.], ack 1, win 229, options [nop,nop,TS val 39536070 ecr 3774937824], length 0
+
+IP 192.168.116.135.37580 > 192.168.116.136.12345: Flags [P.], seq 1:513, ack 1, win 229, options [nop,nop,TS val 39536070 ecr 3774937824], length 512
+
+IP 192.168.116.135.37580 > 192.168.116.136.12345: Flags [F.], seq 513, ack 1, win 229, options [nop,nop,TS val 39536070 ecr 3774937824], length 0
+IP 192.168.116.136.12345 > 192.168.116.135.37580: Flags [.], ack 513, win 506, options [nop,nop,TS val 3774937824 ecr 39536070], length 0
+IP 192.168.116.136.12345 > 192.168.116.135.37580: Flags [F.], seq 1, ack 514, win 506, options [nop,nop,TS val 3774937824 ecr 39536070], length 0
+
+
+IP 192.168.116.135.37580 > 192.168.116.136.12345: Flags [.], ack 2, win 229, options [nop,nop,TS val 39536070 ecr 3774937824], length 0
+
+
+
+
+第二次抓包结果
+
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
+IP 192.168.116.135.37582 > 192.168.116.136.12345: Flags [S], seq 2276829054, win 29200, options [mss 1460,sackOK,TS val 39770015 ecr 0,nop,wscale 7], length 0
+IP 192.168.116.136.12345 > 192.168.116.135.37582: Flags [S.], seq 607757980, ack 2276829055, win 65160, options [mss 1460,sackOK,TS val 3775873609 ecr 39770015,nop,wscale 7], length 0
+IP 192.168.116.135.37582 > 192.168.116.136.12345: Flags [.], ack 1, win 229, options [nop,nop,TS val 39770016 ecr 3775873609], length 0
+IP 192.168.116.135.37582 > 192.168.116.136.12345: Flags [P.], seq 1:513, ack 1, win 229, options [nop,nop,TS val 39770016 ecr 3775873609], length 512
+IP 192.168.116.136.12345 > 192.168.116.135.37582: Flags [.], ack 513, win 506, options [nop,nop,TS val 3775873610 ecr 39770016], length 0
+IP 192.168.116.135.37582 > 192.168.116.136.12345: Flags [F.], seq 513, ack 1, win 229, options [nop,nop,TS val 39770016 ecr 3775873609], length 0
+IP 192.168.116.136.12345 > 192.168.116.135.37582: Flags [F.], seq 1, ack 513, win 506, options [nop,nop,TS val 3775873610 ecr 39770016], length 0
+IP 192.168.116.136.12345 > 192.168.116.135.37582: Flags [.], ack 514, win 506, options [nop,nop,TS val 3775873611 ecr 39770016], length 0
+IP 192.168.116.135.37582 > 192.168.116.136.12345: Flags [.], ack 2, win 229, options [nop,nop,TS val 39770016 ecr 3775873610], length 0
+
+
