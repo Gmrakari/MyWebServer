@@ -50,3 +50,15 @@ struct semid_ds
 	time_t sem_otime;
 	time_t sem_ctime;
 };
+
+/*
+ *
+semget对semid_ds结构体的初始化包括：
+将sem_perm.cuid和sem_perm.uid设置为调用进程的有效用户ID
+将sem_perm.cgid和sem_perm.gid设置为调用进程的有效组ID
+将sem_perm.mode的最低9位设置为sem_flasg参数的最低9位
+将sem_nsems设置位nums_sems
+将sem_otime设置为0
+将sem_ctime设置为当前的系统时间
+*
+*/
