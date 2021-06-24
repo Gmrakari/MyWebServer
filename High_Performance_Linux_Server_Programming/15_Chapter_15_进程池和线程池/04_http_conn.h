@@ -62,7 +62,7 @@ public:
 
 public:
 	/* 初始化新接受的连接 */
-	void init(int sockfd, const sockaddr_int& addr);
+	void init(int sockfd, const sockaddr_in& addr);
 	/* 关闭连接 */
 	void close_conn(bool real_close = true);
 	/* 处理客户请求 */
@@ -144,7 +144,8 @@ private:
 	char* m_file_address;
 	/* 目标文件的状态。通过它我们可以判断文件是否存在、是否为目录、是否可读、并获取文件大小等 */
 	struct stat m_file_stat;
+	/* 我们采用writev来执行写操作，所以定义下面两个成员，其中m_iv_count表示被写内存块的数量 */
 	struct iovec m_iv[2];
 	int m_iv_count;
 };
-#endif;
+#endif
