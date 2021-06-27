@@ -7,7 +7,7 @@
  */
 
 #ifndef HTTPCONNECTION_H
-#def HTTPCONNECTION_H
+#define HTTPCONNECTION_H
 
 #include <unistd.h>
 #include <signal.h>
@@ -40,7 +40,7 @@ public:
 	enum METHOD {
 		GET = 0, POST, HEAD, PUT, DELETE, TRACE, OPTIONS, CONNECT, PATH
 	};
-	/* 解析客户请求时，主状态机所处的状态 */
+	/* 解析客户请求时，主状态机所处的状态  查阅Chapter-08*/
 	enum CHECK_STATE {
 		CHECK_STATE_REQUENTLINE = 0,
 		CHECK_STATE_HEADER,
@@ -105,13 +105,13 @@ public:
 	static int m_user_count;
 
 private:
-	/* 该HTTP连接的socket和对应的socket地址 */
+	/* 该HTTP连接的socket和对方的socket地址 */
 	int m_sockfd;
 	sockaddr_in m_address;
 
 	/* 读缓冲区 */
 	char m_read_buf[READ_BUFFER_SIZE];
-	/* 表示读缓冲区中已经读入客户数据的最后一个字节的下一个位置 */
+	/* 标识读缓冲区中已经读入客户数据的最后一个字节的下一个位置 */
 	int m_read_idx;
 	/* 当前正在分析的字符在读缓冲区中的位置 */
 	int m_checked_idx;
