@@ -42,7 +42,7 @@ public:
 	};
 	/* 解析客户请求时，主状态机所处的状态  查阅Chapter-08*/
 	enum CHECK_STATE {
-		CHECK_STATE_REQUENTLINE = 0,
+		CHECK_STATE_REQUESTLINE = 0,
 		CHECK_STATE_HEADER,
 		CHECK_STATE_CONTENT
 	};
@@ -54,7 +54,7 @@ public:
 	};
 	/* 行的读取状态 */
 	enum LINE_STATUS {
-		LINK_OK = 0, LINE_BAD, LINE_OPEN
+		LINE_OK = 0, LINE_BAD, LINE_OPEN
 	};
 public:
 	http_conn() {}
