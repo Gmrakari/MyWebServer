@@ -66,7 +66,7 @@ ssize_t writen(int fd, void* buff, size_t n) {
 }
 
 //处理sigpipei信号
-void handle_for_siogpipe() {
+void handle_for_sigpipe() {
 	struct sigaction sa;//信号处理结构体
 	memset(&sa, '\0', sizeof(sa));
 	sa.sa_handler = SIG_IGN;//设置信号的处理回调函数，这个SIG_IGN宏代表的操作就是忽略该信号
@@ -85,3 +85,4 @@ int setSocketNonBlocking(int fd) {
 		return -1;
 	return 0;
 }
+
