@@ -6,8 +6,8 @@
  *
  */
 
-#ifndef REQUEATDATA
-#define REQUESTDATA
+#ifndef __REQUEATDATA_H_
+#define __REQUEATDATA_H_
 
 #include <string>
 #include <unordered_map>
@@ -43,7 +43,8 @@ const int PARSE_HEADER_AGAIN = -1;
 const int PARSE_HEADER_ERROR = -2;
 const int PARSE_HEADER_SUCCESS = 0;
 
-const int ANALYSE_ERROR = -2;
+const int ANALYSIS_ERROR = -2;
+const int ANALYSIS_SUCCESS = 0;
 
 const int METHOD_POST = 1;
 const int METHOD_GET = 2;
@@ -67,7 +68,7 @@ enum HeadersState {
 	h_start = 0,
 	h_key,
 	h_colon,
-	h_space_after_colon,
+	h_spaces_after_colon,
 	h_value,
 	h_CR,
 	h_LF,
@@ -137,3 +138,4 @@ struct timerCmp {
 };
 
 #endif
+
