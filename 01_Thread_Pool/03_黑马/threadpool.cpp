@@ -1,7 +1,6 @@
 
 
 /*
- * Date:2021-12-13 21:17
  * filename:threadpool.cpp
  *
  */
@@ -11,6 +10,8 @@
 #include <pthread.h> //pthread_mutex_t pthread_create pthread_cond_t 
 #include <string.h> //memset
 #include <unistd.h> //sleep
+#include <signal.h>	//pthread_kill
+#include <errno.h>  //ESRCH
 
 #include "threadpool.h"
 
@@ -129,6 +130,7 @@ void* threadpool_thread(void* threadpool) {
 
 /* 管理者线程 */
 void* adjust_thread(void* threadpool) {
+	int is_thread_alive(pthread_t tid);
 	int i;
   threadpool_t *pool = (threadpool_t *)threadpool;
 	while (!pool->shutdown) {
@@ -161,7 +163,7 @@ void* adjust_thread(void* threadpool) {
 			}
 			pthread_mutex_unlock(&(pool->lock));
 		}
-		/* 销毁多余的空闲线程 算法:忙线程x2 小于 存活的线程数 且 存活的线程数 大于 最小线程数时 */
+		/* 销毁多余的空闲线程 算法:忙线程*2 小于 存活的线程数 且 存活的线程数 大于 最小线程数时 */
 		if ((busy_thr_num * 2) < live_thr_num && live_thr_num > pool->min_thr_num) {
 			pthread_mutex_lock(&(pool->lock));
 			pool->wait_exit_thr_num = DEFAULT_THREAD_VARY; /* 要销毁的线程数 设置为10 */
@@ -181,7 +183,26 @@ void* adjust_thread(void* threadpool) {
  * check a thread is alive
  */
 int is_thread_alive(pthread_t tid);
-int threadpool_free(threadpool_t* pool);
+int threadpool_free(threadpool_t* pool) {
+	if (pool == NULL)
+		return -1;
+
+	if (pool->task_queue)
+		free(pool->task_queue);
+	if (pool->threads) {
+		free(pool->threads);
+		pthread_mutex_lock(&(pool->lock));
+		pthread_mutex_destroy(&(pool->lock));
+		pthread_mutex_lock(&(pool->thread_counter));
+		pthread_mutex_destroy(&(pool->thread_counter));
+		pthread_cond_destroy(&(pool->queue_not_empty));
+		pthread_cond_destroy(&(pool->queue_not_full));
+	}
+	free(pool);
+	pool = NULL;
+
+	return 0;
+}
 
 threadpool_t* threadpool_create(int min_thr_num, int max_thr_num, int queue_max_size) {
 	threadpool_t* pool = NULL;
@@ -290,15 +311,49 @@ int	threadpool_add(threadpool_t* pool, void* (*function)(void* arg), void* arg) 
 }
 
 int threadpool_destroy(threadpool_t* pool) {
+	int i;
+	if (pool == NULL) 
+		return -1;
+
+	pool->shutdown = true;
+
+	/* 销毁管理线程 */
+	pthread_join(pool->adjust_tid, NULL);
+
+	for (i = 0; i < pool->live_thr_num; i++) {
+		/* 通知所有的空闲线程 */
+		pthread_cond_broadcast(&(pool->queue_not_empty));
+	}
+	for (i = 0;i < pool->live_thr_num; i++) {
+		pthread_join(pool->threads[i], NULL);
+	}
+	threadpool_free(pool);
+
 	return 0;
 }
 
 int threadpool_all_threadnum(threadpool_t* pool) {
-	return 0;
+	int all_threadnum = -1;
+	pthread_mutex_lock(&(pool->lock));
+	all_threadnum = pool->live_thr_num;
+	pthread_mutex_unlock(&(pool->lock));
+	return all_threadnum;
 }
 
 int threadpool_busy_threadnum(threadpool_t* pool) {
-	return 0;
+	int busy_threadnum = -1;
+	pthread_mutex_lock(&(pool->lock));
+	busy_threadnum = pool->busy_thr_num;
+	pthread_mutex_unlock(&(pool->lock));
+	return busy_threadnum;
+}
+
+int is_thread_alive(pthread_t tid) {
+	int kill_rc = pthread_kill(tid, 0); //信号
+	if (kill_rc == ESRCH) {
+		return false;
+	}
+	return true;
 }
 
 #if 1
@@ -310,5 +365,26 @@ void* process(void* arg) {
 
 	return NULL;
 }
+
+int main(void) {
+	//threadpool_t* threadpool_create(int min_thr_num, int max_thr_num, int queue_max_size);
+	
+	threadpool_t *thp = threadpool_create(3, 100, 100);
+	printf("pool inited");
+
+	//int *num = (int *)malloc(sizeof(int)*20);
+	int num[20], i;
+	for (i = 0;i < 20; i++) {
+		num[i] = i;
+		printf("add task %d\n", i);
+		threadpool_add(thp, process, (void*)&num[i]);
+	}
+	sleep(10);
+	threadpool_destroy(thp);
+
+	return 0;
+}
+
+#endif
 
 
