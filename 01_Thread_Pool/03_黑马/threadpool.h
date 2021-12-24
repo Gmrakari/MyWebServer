@@ -53,4 +53,6 @@ int threadpool_all_threadnum(threadpool_t* pool);
  */
 int threadpool_busy_threadnum(threadpool_t* pool);
 
+static void *threadpool_thread(void* threadpool);
+
 #endif
