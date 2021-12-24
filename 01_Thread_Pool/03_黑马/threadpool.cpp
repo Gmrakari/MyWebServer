@@ -21,12 +21,11 @@
 #define true 1
 #define false 0
 
-struct Task {
+//子线程任务结构体
+typedef struct Task {
 	void *(function)(void* arg);			//函数指针，回调函数
 	void *arg;												//上面函数的参数
-};
-
-typedef struct Task threadpool_task_t;		//子线程任务结构体
+}threadpool_task_t;
 
 struct threadpool_t {
 	pthread_mutex_t lock;						//锁住本结构体
@@ -60,7 +59,7 @@ typedef struct threadpool_t threadpool_t;
  * @desc the worker thread
  * @parm threadpool the pool which own the thread
  */
-void* threadpool_thread(void* threadpool) {
+static void* threadpool_thread(void* threadpool) {
 	threadpool_t *pool = (threadpool_t *)threadpool;
 	threadpool_task_t task;
 
@@ -356,35 +355,5 @@ int is_thread_alive(pthread_t tid) {
 	return true;
 }
 
-#if 1
-/* 线程池中的线程，模拟处理函数 */
-void* process(void* arg) {
-	printf("thread 0x:%x working on task %d\n", (unsigned int)pthread_self(), *(int *)arg);
-	sleep(1);
-	printf("task %d is end\n", *(int *)arg);
-
-	return NULL;
-}
-
-int main(void) {
-	//threadpool_t* threadpool_create(int min_thr_num, int max_thr_num, int queue_max_size);
-	
-	threadpool_t *thp = threadpool_create(3, 100, 100);
-	printf("pool inited");
-
-	//int *num = (int *)malloc(sizeof(int)*20);
-	int num[20], i;
-	for (i = 0;i < 20; i++) {
-		num[i] = i;
-		printf("add task %d\n", i);
-		threadpool_add(thp, process, (void*)&num[i]);
-	}
-	sleep(10);
-	threadpool_destroy(thp);
-
-	return 0;
-}
-
-#endif
 
 
