@@ -319,7 +319,7 @@ int requestData::parse_Headers() {
     int key_start = -1, key_end = -1, value_start = -1, value_end = -1;
     int now_read_line_begin = 0;
     bool notFinish = true;
-    for (int i = 0; i < str.size() && notFinish; ++i) { //下面是一个状态机 一次读取key value
+    for (int i = 0; i < (int)str.size() && notFinish; ++i) { //下面是一个状态机 一次读取key value
         switch(h_state) {
             case h_start: { //开始
                 if (str[i] == '\n' || str[i] == '\r')
@@ -377,7 +377,7 @@ int requestData::parse_Headers() {
                 break;
             }
             case h_LF: {
-                if (str[i] = '\r')
+                if (str[i] == '\r')
                     h_state = h_end_CR;
                 else {
                     key_start = i;
@@ -419,7 +419,7 @@ int requestData::analysisRequest() {
             sprintf(header, "%sConnection:keep-alive\r\n",header);
             sprintf(header, "%sKeep-Alive:timeout=%d\r\n",header, EPOLL_WAIT_TIME);
         }
-        char *send_content = "I have receiced this.";
+        char send_content[] = "I have receiced this.";
         sprintf(header, "%sContent-length:%zu\r\n",header, strlen(send_content));
         sprintf(header, "%s\r\n", header);
         size_t send_len = (size_t)writen(fd, header, strlen(header));
@@ -474,7 +474,7 @@ int requestData::analysisRequest() {
 
         //发送文件并校验完整性
         send_len = writen(fd, src_addr, sbuf.st_size);
-        if (send_len != sbuf.st_size) {
+        if (send_len != sbuf.st_size()) {
             perror("Send file failed");
             return ANALYSIS_ERROR;
         }
